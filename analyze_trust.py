@@ -32,7 +32,7 @@ from tqdm import tqdm
 sys.path.append(os.path.dirname(os.path.abspath(__file__)))
 
 from metrics import ImageMetrics
-from net.model import AdaIR
+from net.model import PATMamba
 
 
 ATTRIBUTION_TEMPERATURE = 20.0
@@ -161,8 +161,8 @@ class EncoderFeatureHook:
         self._hook.remove()
 
 
-def load_model(checkpoint_path: str, device: torch.device) -> AdaIR:
-    model = AdaIR(decoder=True).to(device)
+def load_model(checkpoint_path: str, device: torch.device) -> PATMamba:
+    model = PATMamba(decoder=True).to(device)
     checkpoint = torch.load(checkpoint_path, map_location=device, weights_only=False)
     state_dict = checkpoint["model_state_dict"] if "model_state_dict" in checkpoint else checkpoint
     model.load_state_dict(state_dict)
@@ -803,8 +803,8 @@ def parse_args() -> argparse.Namespace:
         "--checkpoint",
         type=str,
         default=(
-            "/root/autodl-tmp/AdaIR/checkpoints/"
-            "AdaIR-mamba_mixed_multi_degradation_peitai_high_20251105_163440/"
+            "/root/autodl-tmp/PAT-Mamba/checkpoints/"
+            "PAT-Mamba_mixed_multi_degradation_peitai_high_20251105_163440/"
             "best_model_psnr36.97_mixed_multi_degradation_peitai_high_20251105_220425.pth"
         ),
         help="Path to the checkpoint",
@@ -879,7 +879,7 @@ def main() -> None:
     )
     if args.output_dir is None:
         args.output_dir = os.path.join(
-            "/root/demo_review/AdaIR-mamba/trust_results",
+            "/root/demo_review/PAT-Mamba/trust_results",
             dataset_label.lower(),
         )
     os.makedirs(args.output_dir, exist_ok=True)
