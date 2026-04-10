@@ -2,7 +2,6 @@
 """
 Trust analysis for PAT-Mamba.
 
-This script adds two reviewer-facing analyses on a mixed-degradation dataset:
 1. TTA-based restoration confidence / uncertainty estimation
 2. Prototype-based degradation attribution from encoder features
 """
